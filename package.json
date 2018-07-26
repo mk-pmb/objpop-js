@@ -1,0 +1,34 @@
+{ "name": "objpop",
+  "version": "0.1.0",
+  "description": "Pop properties from objects and verify you got all of them.",
+  "keywords": [],
+
+  "author": "M.K. (https://github.com/mk-pmb)",
+  "homepage": "https://github.com/mk-pmb/objpop-js/#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mk-pmb/objpop-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mk-pmb/objpop-js/issues"
+  },
+  "contributors": [],
+
+  "private": false, "license": "ISC",
+
+  "main": "op.js",
+  "scripts": { "test": "nodejs test/all.node.js" },
+  "directories": { "test": "test" },
+
+  "dependencies": {},
+  "devDependencies": {
+    "esmod-pmb": "^0.1.5",
+    "usnam-pmb": "^0.2.3"
+  },
+  "optionalDependencies": {}, "peerDependencies": {}, "bundledDependencies": [],
+  "browserify": { "transform": [ "brfs" ] },
+  "engines": { "npm": "*", "node": "*" }, "os": [], "cpu": [],
+
+
+  "npm vs. BOM = Unexpected token": "-*- coding: UTF-8 -*-"
+}
