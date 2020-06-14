@@ -63,6 +63,11 @@ EX.d = function directMode(dict, opt) {
     return checkEmpty(done);
   };
 
+  (function (m) {
+    if (!m) { return; }
+    po.mustBe = function (c, k, d) { return m(c, k)(po.ifHas(k, d)); };
+  }(opt.mustBe));
+
 
 
 

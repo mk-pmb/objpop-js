@@ -2,7 +2,7 @@
 import assert from 'assert';
 
 // ¦mjsUsageDemo¦+
-import objPop from '../';
+import objPop from '..';
 // ¦mjsUsageDemo¦- importPkgName
 
 function repeat(n, x) { return Array.from({ length: n + 1 }).join(x); }

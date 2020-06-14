@@ -1,5 +1,5 @@
 { "name": "objpop",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Pop properties from objects and verify you got all of them.",
   "keywords": [],
 
@@ -17,7 +17,7 @@
   "private": false, "license": "ISC",
 
   "main": "op.js",
-  "scripts": { "test": "nodejs test/all.node.js" },
+  "scripts": { "test": "nodemjs test/all.mjs" },
   "directories": { "test": "test" },
 
   "dependencies": {},

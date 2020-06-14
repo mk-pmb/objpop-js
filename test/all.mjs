@@ -1,1 +1,1 @@
-import './usage.mjs';
+import './usage';
