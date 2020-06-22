@@ -63,11 +63,11 @@ EX.d = function directMode(dict, opt) {
     return checkEmpty(done);
   };
 
-  (function (m) {
+  (function (m, f) {
     if (!m) { return; }
-    m = function poppedPropMustBe(c, k, d) { return m(c, k)(po.ifHas(k, d)); };
-    m.done = m.expectEmpty = po.expectEmpty;
-    po.mustBe = m;
+    f = function poppedPropMustBe(c, k, d) { return m(c, k)(po.ifHas(k, d)); };
+    f.done = f.expectEmpty = po.expectEmpty;
+    po.mustBe = f;
   }(opt.mustBe));
 
 
