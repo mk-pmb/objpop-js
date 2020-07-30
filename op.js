@@ -63,12 +63,17 @@ EX.d = function directMode(dict, opt) {
     return checkEmpty(done);
   };
 
-  (function (m, f) {
+  (function (m, f, dPre, dSuf) {
+    m = opt.mustBe;
     if (!m) { return; }
-    f = function poppedPropMustBe(c, k, d) { return m(c, k)(po.ifHas(k, d)); };
+    dPre = (opt.mustBeDescrPrefix || '');
+    dSuf = (opt.mustBeDescrSuffix || '');
+    f = function poppedPropMustBe(crit, prop, dflt) {
+      return m(crit, dPre + prop + dSuf)(po.ifHas(prop, dflt));
+    };
     f.done = f.expectEmpty = po.expectEmpty;
     po.mustBe = f;
-  }(opt.mustBe));
+  }());
 
 
 
