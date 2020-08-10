@@ -11,12 +11,12 @@ function repeat(n, x) { return Array.from({ length: n + 1 }).join(x); }
 function makeSandwich(receipe) {
   const pop = objPop(receipe);
   const sandwich = ('🍞'
-    + repeat(pop.ifHas('lettuce', 0), '🍀') // unicode is weak on salad.
-    + repeat(pop.ifHas('tomato', 0), '🍅')
-    + repeat(pop.ifHas('ham', 0), '🍗')  // close enough.
-    + repeat(pop.ifHas('pineapple', 0), '🍍')
-    + repeat(pop.ifHas('cheese', 0), '🧀')
-    + repeat(pop.ifHas('cherry', 0), '🍒')
+    + repeat(pop('lettuce', 0), '🍀') // unicode is weak on salad.
+    + repeat(pop('tomato', 0), '🍅')
+    + repeat(pop('ham', 0), '🍗')  // close enough.
+    + repeat(pop('pineapple', 0), '🍍')
+    + repeat(pop('cheese', 0), '🧀')
+    + repeat(pop('cherry', 0), '🍒')
   );
   pop.expectEmpty('unknown ingredients');
   return sandwich;

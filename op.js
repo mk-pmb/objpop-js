@@ -19,23 +19,22 @@ EX.d = function directMode(dict, opt) {
   var mem = opt.memory, po;
   if (mem === true) { mem = ocn(); }
 
-  po = function popper(key) {
-    // ref: popAttr <- xmlattrdict@0.1.13/xmlattrdict
-    var val = dict[key];
-    delete dict[key];
-    if (mem) {
-      if (val === undefined) { return mem[key]; }
-      mem[key] = val;
+  po = function popper(key, dflt) {
+    // ref up to v0.1.4: popAttr <- xmlattrdict@0.1.13/xmlattrdict
+    var val;
+    if (objHop.call(dict, key)) {
+      val = dict[key];
+      delete dict[key];
+      return val;
     }
-    return val;
+    if (mem && objHop.call(mem, key)) { return mem[key]; }
+    return dflt;
   };
   po.dict = dict;
 
   po.isEmpty = function () { return !(Object.keys(dict).length); };
 
-  po.ifHas = function (k, d) {
-    return (objHop.call(dict, k) ? po(k) : d);
-  };
+  po.ifHas = po;  // Default since v0.2.0
 
   po.ifDef = function (k, d) {
     var v = po(k);

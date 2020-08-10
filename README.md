@@ -60,6 +60,8 @@ Known issues
 ------------
 
 * Needs more/better tests and docs.
+* Starting in v0.2.0, you can no longer pop inherited properties even in
+  direct mode. The former `.ifHas` method has become the default.
 
 
 

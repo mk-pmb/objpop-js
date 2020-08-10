@@ -1,5 +1,5 @@
 { "name": "objpop",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Pop properties from objects and verify you got all of them.",
   "keywords": [],
 
@@ -22,8 +22,8 @@
 
   "dependencies": {},
   "devDependencies": {
-    "esmod-pmb": "^0.1.5",
-    "usnam-pmb": "^0.2.3"
+    "nodemjs": "^0.1.8",
+    "usnam-pmb": "^0.2.4"
   },
   "optionalDependencies": {}, "peerDependencies": {}, "bundledDependencies": [],
   "browserify": { "transform": [ "brfs" ] },
