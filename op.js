@@ -32,7 +32,8 @@ EX.d = function directMode(dict, opt) {
   };
   po.dict = dict;
 
-  po.isEmpty = function () { return !(Object.keys(dict).length); };
+  po.remainingKeys = function () { return Object.keys(dict); };
+  po.isEmpty = function () { return !(po.remainingKeys().length); };
 
   po.ifHas = po;  // Default since v0.2.0
 
@@ -50,7 +51,7 @@ EX.d = function directMode(dict, opt) {
     // ref: rejectLeftoverAttrs <- render-ssi-like-file-pmb@0.1.9
     if (po.isEmpty()) { return true; }
     var err = new Error((errMsg || opt.leftoversMsg || df.leftoversMsg)
-      + ': ' + Object.keys(dict).join(', '));
+      + ': ' + po.remainingKeys().join(', '));
     err.name = (opt.errName || 'LeftoverKeys');
     throw err;
   };
