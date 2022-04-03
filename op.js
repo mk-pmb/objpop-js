@@ -71,6 +71,10 @@ EX.d = function directMode(dict, opt) {
     f = function poppedPropMustBe(crit, prop, dflt) {
       return m(crit, dPre + prop + dSuf)(po.ifHas(prop, dflt));
     };
+    f.sub = function subObjMustBe(prop, crit) {
+      return EX(f(crit || 'obj | bool | undef | nul', prop), opt);
+    };
+    f.getDict = function getDict() { return dict; };
     f.done = f.expectEmpty = po.expectEmpty;
     po.mustBe = f;
   }());
