@@ -2,7 +2,7 @@
 import assert from 'assert';
 
 // ¦mjsUsageDemo¦+
-import objPop from '..';
+import objPop from '../op.js';
 // ¦mjsUsageDemo¦- importPkgName
 
 function repeat(n, x) { return Array.from({ length: n + 1 }).join(x); }
@@ -23,15 +23,15 @@ function makeSandwich(receipe) {
 }
 
 const hawaii = { ham: 1, pineapple: 1, cheese: 1, cherry: 1 };
-assert.equal(makeSandwich(hawaii), '🍞🍗🍍🧀🍒');
+assert.strictEqual(makeSandwich(hawaii), '🍞🍗🍍🧀🍒');
 
 // Original object wasn't modified, so it works again:
-assert.equal(makeSandwich(hawaii), '🍞🍗🍍🧀🍒');
+assert.strictEqual(makeSandwich(hawaii), '🍞🍗🍍🧀🍒');
 
 // Except when you use direct mode (.d):
 const directPop = objPop.d(hawaii);
-assert.equal(directPop('cherry'), 1);
-assert.equal(directPop('cherry'), undefined);
+assert.strictEqual(directPop('cherry'), 1);
+assert.strictEqual(directPop('cherry'), undefined);
 
 const blt = { bacon: 2, lettuce: 3, tomato: 3 };
 assert.throws(() => makeSandwich(blt),

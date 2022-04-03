@@ -1,22 +1,29 @@
-﻿/*jslint indent: 2, maxlen: 80, continue: false, unparam: false, node: true */
+﻿// eslint-disable-next-line
+/*jslint indent: 2, maxlen: 80, continue: false, unparam: false, node: true */
 /* -*- tab-width: 2 -*- */
 'use strict';
 
-var EX, df,
-  obAss = Object.assign, objHop = Object.prototype.hasOwnProperty;
+// Weird coding style is because I double-lint with eslint and jslint,
+// in order to guarantee compatibility with exotic old browsers.
+/* eslint-disable no-var, one-var, one-var-declaration-per-line */
+
+var EX, df, obAss = Object.assign, objHop = Object.prototype.hasOwnProperty;
+
 function ocn() { return Object.create(null); }
 
 EX = function objpop(dict, opt) { return EX.d(obAss(ocn(), dict), opt); };
 
-EX.defaults = df = {
+df = {
   leftoversMsg: 'Unsupported leftover keys',
 };
+EX.defaults = df;
 
 EX.d = function directMode(dict, opt) {
   // directMode works on whatever, so beware of inherited properties!
-  if (!dict) { dict = false; }
-  if (!opt) { opt = false; }
-  var mem = opt.memory, po;
+  var po, mem;
+  if (!dict) { return directMode(ocn(), opt); }
+  if (!opt) { return directMode(dict, true); }
+  mem = opt.memory;
   if (mem === true) { mem = ocn(); }
 
   po = function popper(key, dflt) {
@@ -24,7 +31,7 @@ EX.d = function directMode(dict, opt) {
     var val;
     if (objHop.call(dict, key)) {
       val = dict[key];
-      delete dict[key];
+      delete dict[key]; // eslint-disable-line no-param-reassign
       return val;
     }
     if (mem && objHop.call(mem, key)) { return mem[key]; }
@@ -32,38 +39,43 @@ EX.d = function directMode(dict, opt) {
   };
 
   po.getDict = function getDict() { return dict; };
-  po.remainingKeys = function () { return Object.keys(dict); };
-  po.isEmpty = function () { return !(po.remainingKeys().length); };
+  po.remainingKeys = function remainingKeys() { return Object.keys(dict); };
+  po.isEmpty = function isEmpty() { return !(po.remainingKeys().length); };
   po.ifHas = po;  // Default since v0.2.0
 
-  po.ifDef = function (k, d) {
+  po.ifDef = function ifDef(k, d) {
     var v = po(k);
     return (v === undefined ? d : v);
   };
 
-  po.ifVal = function (k, d) {
+  po.ifVal = function ifVal(k, d) {
     var v = po(k);
     return (po.isEmpty(v) ? d : v);
   };
 
-  po.done = po.expectEmpty = function expectEmpty(errMsg) {
-    // ref: rejectLeftoverAttrs <- render-ssi-like-file-pmb@0.1.9
-    if (po.isEmpty()) { return true; }
-    var err = new Error((errMsg || opt.leftoversMsg || df.leftoversMsg)
-      + ': ' + po.remainingKeys().join(', '));
-    err.name = (opt.errName || 'LeftoverKeys');
-    throw err;
-  };
+  (function tmpNS() {
+    function expectEmpty(errMsg) {
+      // ref: rejectLeftoverAttrs <- render-ssi-like-file-pmb@0.1.9
+      var err;
+      if (po.isEmpty()) { return true; }
+      err = new Error((errMsg || opt.leftoversMsg || df.leftoversMsg)
+        + ': ' + po.remainingKeys().join(', '));
+      err.name = (opt.errName || 'LeftoverKeys');
+      throw err;
+    }
+    po.done = expectEmpty;
+    po.expectEmpty = expectEmpty;
+  }());
 
-  po.willConsumeAll = function (doit) {
+  po.willConsumeAll = function willConsumeAll(doit) {
     var done = doit(po);
     function checkEmpty(x) { return po.expectEmpty() && x; }
     if (done.then) { return done.then(checkEmpty); }
     return checkEmpty(done);
   };
 
-  (function (m, f, dPre, dSuf) {
-    m = opt.mustBe;
+  (function tmpNS() {
+    var m = opt.mustBe, f, dPre, dSuf;
     if (!m) { return; }
     dPre = (opt.mustBeDescrPrefix || '');
     dSuf = (opt.mustBeDescrSuffix || '');
@@ -73,8 +85,9 @@ EX.d = function directMode(dict, opt) {
     f.sub = function subObjMustBe(prop, crit) {
       return EX(f(crit || 'obj | bool | undef | nul', prop), opt);
     };
-    f.getDict = function getDict() { return dict; };
-    f.done = f.expectEmpty = po.expectEmpty;
+    f.getDict = po.getDict;
+    f.done = po.expectEmpty;
+    f.expectEmpty = f.done;
     po.mustBe = f;
   }());
 

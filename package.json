@@ -1,5 +1,5 @@
 { "name": "objpop",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Pop properties from objects and verify you got all of them.",
   "keywords": [],
 
@@ -19,15 +19,19 @@
   "main": "op.js",
   "scripts": { "test": "nodemjs test/all.mjs" },
   "directories": { "test": "test" },
+  "eslintConfig": { "extends": "nodejs-pmb" },
 
+  "engines": { "npm": ">=7.0.0", "node": ">=8.0.0" },
   "dependencies": {},
   "devDependencies": {
-    "nodemjs": "^0.1.8",
-    "usnam-pmb": "^0.2.4"
+    "eslint-config-nodejs-pmb": "^0.3.3",
+    "eslint-plugin-json-light-pmb": "^1.0.7",
+    "eslint-plugin-node": "^11.1.0",
+    "nodemjs": "^0.1.9",
+    "usnam-pmb": "^0.2.5"
   },
   "optionalDependencies": {}, "peerDependencies": {}, "bundledDependencies": [],
   "browserify": { "transform": [ "brfs" ] },
-  "engines": { "npm": "*", "node": "*" }, "os": [], "cpu": [],
 
 
   "npm vs. BOM = Unexpected token": "-*- coding: UTF-8 -*-"

@@ -1,3 +1,3 @@
-import './usage';
+import './usage.mjs';
 
-import './inheritedProps';
+import './inheritedProps.mjs';

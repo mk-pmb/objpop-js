@@ -1,7 +1,7 @@
 ﻿import 'usnam-pmb';
 import assert from 'assert';
 
-import objPop from '..';
+import objPop from '../op.js';
 
 const eq = assert.strictEqual;
 
