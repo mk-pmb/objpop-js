@@ -30,11 +30,10 @@ EX.d = function directMode(dict, opt) {
     if (mem && objHop.call(mem, key)) { return mem[key]; }
     return dflt;
   };
-  po.dict = dict;
 
+  po.getDict = function getDict() { return dict; };
   po.remainingKeys = function () { return Object.keys(dict); };
   po.isEmpty = function () { return !(po.remainingKeys().length); };
-
   po.ifHas = po;  // Default since v0.2.0
 
   po.ifDef = function (k, d) {
