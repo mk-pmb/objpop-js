@@ -75,13 +75,18 @@ EX.d = function directMode(dict, opt) {
   };
 
   (function tmpNS() {
-    var m = opt.mustBe, f, dPre, dSuf;
+    var m = opt.mustBe, f, dPre, dSuf, i;
     if (!m) { return; }
     dPre = (opt.mustBeDescrPrefix || '');
     dSuf = (opt.mustBeDescrSuffix || '');
     f = function poppedPropMustBe(crit, prop, dflt) {
+      if (!prop) { return f.bind(null, crit); }
       return m(crit, dPre + prop + dSuf)(po.ifHas(prop, dflt));
     };
+
+    i = (m.IMPL || false).installShorthands;
+    if (i && i.apply) { i(f, f); }
+
     f.sub = function subObjMustBe(prop, crit) {
       return EX(f(crit || 'obj | bool | undef | nul', prop), opt);
     };
