@@ -56,9 +56,9 @@ EX.d = function directMode(dict, opt) {
   (function tmpNS() {
     function expectEmpty(errMsg) {
       // ref: rejectLeftoverAttrs <- render-ssi-like-file-pmb@0.1.9
-      var err;
+      var Cls = (opt.leftoversErrCls || Error), err;
       if (po.isEmpty()) { return true; }
-      err = new Error((errMsg || opt.leftoversMsg || df.leftoversMsg)
+      err = new Cls((errMsg || opt.leftoversMsg || df.leftoversMsg)
         + ': ' + po.remainingKeys().join(', '));
       err.name = (opt.errName || 'LeftoverKeys');
       throw err;
