@@ -7,6 +7,7 @@
 // in order to guarantee compatibility with exotic old browsers.
 /* eslint-disable no-var, one-var, one-var-declaration-per-line */
 
+(function setup() {
   var EX, df, obAss = Object.assign, objHop = Object.prototype.hasOwnProperty;
 
   function ocn() { return Object.create(null); }
@@ -103,4 +104,15 @@
     return po;
   };
 
-module.exports = EX;
+
+  (function unifiedExport(e) {
+    /*global define: true, window: true */
+    var d = ((typeof define === 'function') && define),
+      m = ((typeof module === 'object') && module);
+    if (d && d.amd) { d(function f() { return e; }); }
+    if (m && m.exports) { m.exports = e; }
+    if (d || m) { return; }
+    m = ((typeof window === 'object') && window);
+    if (m) { m.objPop = e; }
+  }(EX));
+}());
