@@ -49,6 +49,17 @@
       return (v === undefined ? d : v);
     };
 
+    po.firstDefinedKey = function firstDefinedKey(keys) {
+      var v;
+      Array.from(keys).some(function check(k, i) {
+        v = po(k);
+        if (v === undefined) { return false; }
+        v = { key: k, val: v, idx: i };
+        return true;
+      });
+      return (v || false);
+    };
+
     po.ifVal = function ifVal(k, d) {
       var v = po(k);
       return (po.isEmpty(v) ? d : v);
