@@ -21,7 +21,7 @@
 
   EX.d = function directMode(dict, opt) {
     // directMode works on whatever, so beware of inherited properties!
-    var po, mem;
+    var po, mem, directModeResult;
     if (!dict) { return directMode(ocn(), opt); }
     if (!opt) { return directMode(dict, true); }
     mem = opt.memory;
@@ -38,6 +38,7 @@
       if (mem && objHop.call(mem, key)) { return mem[key]; }
       return dflt;
     };
+    directModeResult = po;
 
     po.getDict = function getDict() { return dict; };
     po.remainingKeys = function remainingKeys() { return Object.keys(dict); };
@@ -87,7 +88,7 @@
     };
 
     (function tmpNS() {
-      var m = opt.mustBe, f, dPre, dSuf, i;
+      var m = (opt.mustBe || opt.justMustBe), f, dPre, dSuf, i;
       if (!m) { return; }
       dPre = (opt.mustBeDescrPrefix || '');
       dSuf = (opt.mustBeDescrSuffix || '');
@@ -102,18 +103,25 @@
       f.sub = function subObjMustBe(prop, crit) {
         return EX(f(crit || 'obj | bool | undef | nul', prop), opt);
       };
+      if (opt.justMustBe) {
+        f.pop = po;
+        directModeResult = f;
+        // DON'T assign .mustBe: Avoid circular references.
+        return;
+      }
+      po.mustBe = f;
       f.getDict = po.getDict;
       f.done = po.expectEmpty;
       f.expectEmpty = f.done;
-      po.mustBe = f;
+      f.remainingKeys = po.remainingKeys;
     }());
 
 
 
 
 
-    return po;
-  };
+    return directModeResult;
+  }; // end of EX.d = function directMode…
 
 
   (function unifiedExport(e) {
